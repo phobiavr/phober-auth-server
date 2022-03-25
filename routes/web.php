@@ -19,4 +19,5 @@ $router->get('/', function () use ($router) {
   return $router->app->version();
 });
 
-$router->post('/authorize', 'AuthController@getToken');
+$router->post('/authenticate', 'AuthController@authenticate');
+$router->get('/valid', 'AuthController@valid');

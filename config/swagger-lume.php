@@ -107,6 +107,15 @@ return [
     | Examples of Security definitions
     |--------------------------------------------------------------------------
     */
+
+    'bearer_token' => [
+      'type' => 'http',
+      'description' => 'Authorization token obtained from logging in.',
+      'name' => 'Authorization',
+      'in' => 'header',
+      'scheme' => 'bearer',
+    ],
+
     /*
     'api_key_security_example' => [ // Unique name of security
         'type' => 'apiKey', // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
