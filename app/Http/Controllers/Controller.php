@@ -16,7 +16,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
  * )
  *
  * @OA\Server(
- *      url="http://phober-auth-server",
+ *      url="http://localhost:8500",
  *      description="localhost"
  * )
  */
