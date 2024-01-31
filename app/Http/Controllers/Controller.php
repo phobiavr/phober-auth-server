@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
  *    title="Phober - Auth Server",
- *    version="1.0.0",
+ *    version="1.0.5",
  *    @OA\Contact(
  *      name="Hikmat",
  *      url="https://www.linkedin.com/in/abdukhaligov/",
@@ -20,6 +23,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
  *      description="localhost"
  * )
  */
-class Controller extends BaseController {
-  //
+class Controller extends BaseController
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

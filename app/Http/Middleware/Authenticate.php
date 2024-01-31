@@ -2,41 +2,39 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use App\Models\User;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Contracts\Auth\Factory as Auth;
-use Illuminate\Http\Request;
 
-class Authenticate {
-  /**
-   * The authentication guard factory instance.
-   *
-   * @var Auth
-   */
-  protected $auth;
+class Authenticate extends Middleware
+{
+    /**
+     * @inheritDoc
+     */
+    protected $auth;
 
-  /**
-   * Create a new middleware instance.
-   *
-   * @param Auth $auth
-   * @return void
-   */
-  public function __construct(Auth $auth) {
-    $this->auth = $auth;
-  }
-
-  /**
-   * Handle an incoming request.
-   *
-   * @param Request $request
-   * @param Closure $next
-   * @param string|null $guard
-   * @return mixed
-   */
-  public function handle($request, Closure $next, $guard = null) {
-    if ($this->auth->guard($guard)->guest()) {
-      return response('Unauthorized.', 401);
+    /**
+     * @inheritDoc
+     */
+    public function __construct(Auth $auth)
+    {
+        $this->auth = $auth;
     }
 
-    return $next($request);
-  }
+    /**
+     * @inheritDoc
+     */
+    public function handle($request, \Closure $next, ...$guards)
+    {
+        $token = $request->bearerToken();
+        $user  = User::query()->where('api_token', $token)->first();
+
+        if (! $user) {
+            return response()->json(['message' => 'Unauthorized.'], 401);
+        }
+
+        auth()->login($user);
+
+        return $next($request);
+    }
 }

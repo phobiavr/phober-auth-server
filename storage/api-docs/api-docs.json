@@ -1,1 +1,77 @@
-{"openapi":"3.0.0","info":{"title":"Phober - Auth Server","contact":{"name":"Hikmat","url":"https:\/\/www.linkedin.com\/in\/abdukhaligov\/","email":"hikmat.pou@gmail.com"},"version":"1.0.0"},"servers":[{"url":"http:\/\/localhost:8500","description":"localhost"}],"paths":{"\/authenticate":{"post":{"tags":["Authentication & Authorization"],"summary":"Get token","operationId":"authenticate","requestBody":{"required":true,"content":{"application\/json":{"schema":{},"example":{"email":"admin@site.com","password":"admin"}}}},"responses":{"200":{"description":"ok"}},"security":[]}},"\/valid":{"get":{"tags":["Authentication & Authorization"],"summary":"Check authentication validity","operationId":"valid","responses":{"200":{"description":"ok"}},"security":[{"bearer_token":[]}]}}},"components":{"securitySchemes":{"bearer_token":{"type":"http","description":"Authorization token obtained from logging in.","name":"Authorization","in":"header","scheme":"bearer"}}}}
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Phober - Auth Server",
+        "contact": {
+            "name": "Hikmat",
+            "url": "https://www.linkedin.com/in/abdukhaligov/",
+            "email": "hikmat.pou@gmail.com"
+        },
+        "version": "1.0.5"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8500",
+            "description": "localhost"
+        }
+    ],
+    "paths": {
+        "/authenticate": {
+            "post": {
+                "tags": [
+                    "Authentication & Authorization"
+                ],
+                "summary": "Get token",
+                "operationId": "authenticate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "email": "admin@site.com",
+                                "password": "admin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                },
+                "security": []
+            }
+        },
+        "/valid": {
+            "get": {
+                "tags": [
+                    "Authentication & Authorization"
+                ],
+                "summary": "Check authentication validity",
+                "operationId": "valid",
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "description": "Authorization token obtained from logging in.",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

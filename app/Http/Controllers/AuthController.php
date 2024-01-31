@@ -56,17 +56,9 @@ class AuthController extends Controller {
    * )
    */
   public function valid(Request $request): JsonResponse {
-    $token = request()->bearerToken();
+    $user = auth()->user();
 
-    if (!$token) return response()->json(['message' => 'Credentials error'], 401);
-
-    $user = User::query()->where('api_token', $token)->first();
-
-    if ($user) {
-      return response()->json(['user' => $user->toArray()]);
-    } else {
-      return response()->json(['message' => 'Credentials error'], 401);
-    }
+    return response()->json(['user' => $user->toArray()]);
   }
 
   private static function quickRandom($length = 16) {
