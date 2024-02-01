@@ -18,7 +18,7 @@ class WipeCommand extends \Illuminate\Database\Console\WipeCommand
         /** @var MySqlBuilder $schema */
         $schema = $this->laravel['db']->connection($database)->getSchemaBuilder();
         $tables = [];
-        $excludedTables = ['users'];
+        $excludedTables = ['users', 'password_resets', 'personal_access_tokens'];
 
         foreach ($schema->getAllTables() as $row) {
             $row = (array) $row;
