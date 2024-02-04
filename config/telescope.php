@@ -46,7 +46,7 @@ return [
 
     'storage' => [
         'database' => [
-            'connection' => env('DB_CONNECTION', 'mysql'),
+            'connection' => 'db_log',
             'chunk' => 1000,
         ],
     ],
@@ -102,7 +102,7 @@ return [
     ],
 
     'ignore_commands' => [
-        //
+        'migrate', 'db:seed'
     ],
 
     /*
