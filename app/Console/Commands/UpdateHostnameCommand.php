@@ -29,29 +29,33 @@ class UpdateHostnameCommand extends Command
    */
   public function handle()
   {
-    $hostname = gethostname(); // Automatically get the hostname
-    $containerName = $this->argument('container'); // Manually provided container name
-    $timestamp = Carbon::now();
-    $query = DB::connection('db_log')->table('hostnames');
-    $record = [
-      'container' => $containerName,
-      'updated_at' => $timestamp,
-    ];
+      try {
+          $hostname = gethostname(); // Automatically get the hostname
+          $containerName = $this->argument('container'); // Manually provided container name
+          $timestamp = Carbon::now();
+          $query = DB::connection('db_log')->table('hostnames');
+          $record = [
+              'container' => $containerName,
+              'updated_at' => $timestamp,
+          ];
 
-    if ($query->where('hostname', $hostname)->exists()) {
-      $query->where('hostname', $hostname)
-        ->update($record);
+          if ($query->where('hostname', $hostname)->exists()) {
+              $query->where('hostname', $hostname)
+                  ->update($record);
 
-      $this->info("Hostname record for '{$hostname}' has been updated.");
-    } else {
-      $query->insert([
-          'hostname' => $hostname,
-          'created_at' => $timestamp,
-        ] + $record);
+              $this->info("Hostname record for '{$hostname}' has been updated.");
+          } else {
+              $query->insert([
+                      'hostname' => $hostname,
+                      'created_at' => $timestamp,
+                  ] + $record);
 
-      $this->info("Hostname record for '{$hostname}' has been created.");
-    }
+              $this->info("Hostname record for '{$hostname}' has been created.");
+          }
 
-    return Command::SUCCESS;
+          return Command::SUCCESS;
+      } catch (\Throwable $ignored) {
+          $this->warn("Hostname record for '{$hostname}' has not been created/updated. " . $ignored->getMessage());
+      }
   }
 }
