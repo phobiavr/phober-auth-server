@@ -1,4 +1,4 @@
-## <p align="center">Auth-server</p>
+## Auth-server
 
 The `auth-server` within the <b>Phober</b> project manages authentication and authorization functionalities using the `phober_auth` database for user authentication.
 
