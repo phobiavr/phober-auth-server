@@ -186,7 +186,6 @@ return [
          * Package Service Providers...
          */
 
-        \Abdukhaligov\LaravelConfigServerClient\ConfigServerProvider::class,
         \Shared\SharedServiceProvider::class,
 
         /*
