@@ -187,8 +187,7 @@ return [
          */
 
         \Abdukhaligov\LaravelConfigServerClient\ConfigServerProvider::class,
-        \Abdukhaligov\LaravelForceJson\ForceJsonServiceProvider::class,
-        \Shared\Package\PackageProvider::class,
+        \Shared\SharedServiceProvider::class,
 
         /*
          * Application Service Providers...
