@@ -7,8 +7,7 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Http\JsonResponse;
 
-class Authenticate extends Middleware
-{
+class Authenticate extends Middleware {
     /**
      * @inheritDoc
      */
@@ -17,19 +16,17 @@ class Authenticate extends Middleware
     /**
      * @inheritDoc
      */
-    public function __construct(Auth $auth)
-    {
+    public function __construct(Auth $auth) {
         $this->auth = $auth;
     }
 
     /**
      * @inheritDoc
      */
-    public function handle($request, \Closure $next, ...$guards)
-    {
+    public function handle($request, \Closure $next, ...$guards) {
         if (
-            (! $token = $request->bearerToken()) ||
-            (! $user = User::query()->where('api_token', $token)->first())
+            (!$token = $request->bearerToken()) ||
+            (!$user = User::query()->where('api_token', $token)->first())
         ) {
             return $this->unauthorized();
         }
@@ -39,8 +36,7 @@ class Authenticate extends Middleware
         return $next($request);
     }
 
-    public function unauthorized(): JsonResponse
-    {
+    public function unauthorized(): JsonResponse {
         return response()->json(['message' => 'Unauthorized.'], 401);
     }
 }

@@ -23,7 +23,6 @@ use Illuminate\Routing\Controller as BaseController;
  *      description="localhost"
  * )
  */
-class Controller extends BaseController
-{
+class Controller extends BaseController {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
