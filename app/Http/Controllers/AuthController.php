@@ -61,7 +61,7 @@ class AuthController extends Controller {
     return response()->json(['user' => $user->toArray()]);
   }
 
-  private static function quickRandom($length = 16) {
+  private static function quickRandom($length = 16): string {
     $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
