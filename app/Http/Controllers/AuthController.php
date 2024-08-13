@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller {
+class AuthController extends BaseController {
     public function authenticate(Request $request): JsonResponse {
         $user = User::query()->where('email', $request->input('email'))->first();
 

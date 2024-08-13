@@ -158,15 +158,12 @@ return [
          * Laravel Framework Service Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
-        Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
         /*
@@ -178,7 +175,6 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ],
 
