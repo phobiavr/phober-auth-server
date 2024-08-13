@@ -8,25 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
-    /**
-     * @OA\Post(
-     *   path="/authenticate",
-     *   summary="Get token",
-     *   operationId="authenticate",
-     *   tags={"Authentication & Authorization"},
-     *   security={},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       example={"email":"admin@site.com","password":"admin"}
-     *      )
-     *   ),
-     *   @OA\Response(
-     *     response="200",
-     *     description="ok",
-     *   )
-     * )
-     */
     public function authenticate(Request $request): JsonResponse {
         $user = User::query()->where('email', $request->input('email'))->first();
 
@@ -48,19 +29,6 @@ class AuthController extends Controller {
         return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
     }
 
-    /**
-     * @OA\Get(
-     *   path="/valid",
-     *   summary="Check authentication validity",
-     *   operationId="valid",
-     *   tags={"Authentication & Authorization"},
-     *   security={{"bearer_token": {}}},
-     *   @OA\Response(
-     *     response="200",
-     *     description="ok",
-     *   )
-     * )
-     */
     public function valid(Request $request): JsonResponse {
         $user = auth()->user();
 
