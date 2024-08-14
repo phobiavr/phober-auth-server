@@ -4,8 +4,68 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2bca65b48716bfcb270b1eca6fd677e",
+    "content-hash": "30dc97a47f872cf4b46e3955d36693e0",
     "packages": [
+        {
+            "name": "abdukhaligov/laravel-otp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Abdukhaligov/laravel-otp.git",
+                "reference": "757681b74820e14ba938f190f2873d6ef34d6d5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Abdukhaligov/laravel-otp/zipball/757681b74820e14ba938f190f2873d6ef34d6d5f",
+                "reference": "757681b74820e14ba938f190f2873d6ef34d6d5f",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "*",
+                "php": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Abdukhaligov\\LaravelOTP\\OtpServiceProvider"
+                    ],
+                    "aliases": {
+                        "Otp": "OtpFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Abdukhaligov\\LaravelOTP\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdukhaligov Hikmat",
+                    "email": "hikmat.pou@gmail.com",
+                    "homepage": "https://github.com/Abdukhaligov",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The OTP package for Laravel.",
+            "homepage": "https://github.com/Abdukhaligov/laravel-otp",
+            "keywords": [
+                "abdukhaligov",
+                "laravel",
+                "laravel-otp"
+            ],
+            "support": {
+                "issues": "https://github.com/Abdukhaligov/laravel-otp/issues",
+                "source": "https://github.com/Abdukhaligov/laravel-otp/tree/master"
+            },
+            "time": "2024-08-10T09:36:54+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",
@@ -2912,7 +2972,7 @@
             "dist": {
                 "type": "path",
                 "url": "./shared",
-                "reference": "4aa9199a8da390d86b9ffb3c316615115d9be360"
+                "reference": "1652e576e6f5f8b1e3e23ff33204028b027b1d7b"
             },
             "require": {
                 "laravel/framework": "*",
@@ -5446,6 +5506,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "abdukhaligov/laravel-otp": 20,
         "shared/package": 20
     },
     "prefer-stable": true,
