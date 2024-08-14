@@ -14,5 +14,5 @@ Route::prefix('/otp')->group(function () {
     Route::post('/generate', [OtpController::class, 'generateOtp']);
     Route::post('/validate', [OtpController::class, 'validateOtp']);
     Route::get('/submit', [OtpController::class, 'submitOtp']);
-    Route::get('/check-submitted/{identifier}', [OtpController::class, 'checkSubmitted']);
+    Route::post('/check-submitted', [OtpController::class, 'checkSubmitted']);
 });

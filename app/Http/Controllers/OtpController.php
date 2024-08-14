@@ -13,16 +13,16 @@ class OtpController extends BaseController {
         $digits = $request->get('digits');
         $validity = $request->get('validity');
 
-        $token = Otp::generate($identifier, $digits, $validity, onlyDigits: true);
+        $code = Otp::generate($identifier, $digits, $validity, onlyDigits: true);
 
-        return response()->json(['token' => $token]);
+        return response()->json(['code' => $code]);
     }
 
     public function validateOtp(Request $request): JsonResponse {
         $identifier = $request->get('identifier');
-        $token = strtoupper($request->get('token'));
+        $code = strtoupper($request->get('code'));
 
-        $valid = Otp::validate($identifier, $token);
+        $valid = Otp::validate($identifier, $code);
 
         if (!$valid) {
             return response()->json(['message' => 'OTP is invalid'], 400);
@@ -33,9 +33,9 @@ class OtpController extends BaseController {
 
     public function submitOtp(Request $request): JsonResponse {
         $identifier = $request->get('identifier');
-        $token = strtoupper($request->get('token'));
+        $code = strtoupper($request->get('code'));
 
-        $valid = Otp::submit($identifier, $token);
+        $valid = Otp::submit($identifier, $code);
 
         if (!$valid) {
             return response()->json(['message' => 'OTP is invalid'], 400);
@@ -44,7 +44,8 @@ class OtpController extends BaseController {
         return response()->json(['message' => 'OTP submitted successfully']);
     }
 
-    public function checkSubmitted(string $identifier): JsonResponse {
+    public function checkSubmitted(Request $request): JsonResponse {
+        $identifier = $request->get('identifier');
         $valid = Otp::checkSubmitted($identifier);
 
         if (!$valid) {
