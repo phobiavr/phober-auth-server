@@ -170,6 +170,7 @@ return [
          * Package Service Providers...
          */
         \Shared\SharedServiceProvider::class,
+        \Abdukhaligov\LaravelOtp\OtpServiceProvider::class,
 
         /*
          * Application Service Providers...
