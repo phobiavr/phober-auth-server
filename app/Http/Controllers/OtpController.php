@@ -6,16 +6,23 @@ use Abdukhaligov\LaravelOTP\OtpFacade as Otp;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Shared\Clients\NotificationClient;
+use Shared\Helper;
+use Shared\Notification\Channel;
+use Shared\Notification\Provider;
 
 class OtpController extends BaseController {
     public function generateOtp(Request $request): JsonResponse {
-        $identifier = $request->get('identifier');
+        $identifier = Helper::quickRandom(15);
         $digits = $request->get('digits');
         $validity = $request->get('validity');
 
         $code = Otp::generate($identifier, $digits, $validity, onlyDigits: true);
 
-        return response()->json(['code' => $code]);
+        $message = 'OTP: ' . $code;
+        NotificationClient::sendMessage(Provider::TELEGRAM, Channel::OTP, $message);
+
+        return response()->json(['identifier' => $identifier, 'message' => 'OTP created successfully']);
     }
 
     public function validateOtp(Request $request): JsonResponse {
