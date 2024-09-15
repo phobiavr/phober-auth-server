@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+class User extends \Illuminate\Foundation\Auth\User {
+    protected $connection = 'db_auth';
 
-class User extends Authenticatable {
     public function toArray(): array {
         return [
             "id"         => $this->id,

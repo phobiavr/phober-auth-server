@@ -174,11 +174,6 @@ return [
          */
         \Shared\SharedServiceProvider::class,
         \Abdukhaligov\LaravelOtp\OtpServiceProvider::class,
-
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
     ],
 
     /*
