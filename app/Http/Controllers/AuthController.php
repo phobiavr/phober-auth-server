@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthenticateRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Shared\Helper;
 
 class AuthController extends BaseController {
-    public function authenticate(Request $request): JsonResponse {
+    public function authenticate(AuthenticateRequest $request): JsonResponse {
         $user = User::query()->where('email', $request->input('email'))->first();
 
         if (Hash::check($request->input('password'), $user->password)) {
