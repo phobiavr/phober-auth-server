@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Abdukhaligov\LaravelOTP\OtpFacade as Otp;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Shared\Clients\NotificationClient;
-use Shared\Helper;
-use Shared\Notification\Channel;
-use Shared\Notification\Provider;
+use Illuminate\Support\Facades\Log;
+use Phobiavr\PhoberLaravelCommon\Clients\NotificationClient;
+use Phobiavr\PhoberLaravelCommon\Enums\NotificationChannel;
+use Phobiavr\PhoberLaravelCommon\Enums\NotificationProvider;
+use Phobiavr\PhoberLaravelCommon\Helper;
+use Symfony\Component\HttpFoundation\Response;
 
 class OtpController extends BaseController {
     public function generateOtp(Request $request): JsonResponse {
@@ -20,7 +23,14 @@ class OtpController extends BaseController {
         $code = Otp::generate($identifier, $digits, $validity, onlyDigits: true);
 
         $message = 'OTP: ' . $code;
-        NotificationClient::sendMessage(Provider::TELEGRAM, Channel::OTP, $message);
+
+        try {
+            NotificationClient::sendMessage(NotificationProvider::TELEGRAM, NotificationChannel::OTP, $message);
+        } catch (ConnectionException $e) {
+            Log::error('Failed to send OTP notification', ['message' => $e->getMessage()]);
+
+            return response()->json(['message' => 'OTP created successfully, but failed to send'], Response::HTTP_ACCEPTED);
+        }
 
         return response()->json(['identifier' => $identifier, 'message' => 'OTP created successfully']);
     }

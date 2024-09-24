@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Hash;
-use Shared\Helper;
+use Phobiavr\PhoberLaravelCommon\Helper;
 
 class AuthController extends BaseController {
     public function authenticate(AuthenticateRequest $request): JsonResponse {
