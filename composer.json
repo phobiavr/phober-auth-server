@@ -6,15 +6,15 @@
     "license": "MIT",
     "repositories": [
         {
-            "type": "path",
-            "url": "./shared"
+            "type": "vcs",
+            "url": "https://github.com/phobiavr/phober-laravel-common"
         }
     ],
     "require": {
         "php": "^8.2",
         "abdukhaligov/laravel-otp": "dev-master",
         "laravel/framework": "^11.9",
-        "shared/package": "dev-main"
+        "phobiavr/phober-laravel-common": "dev-master"
     },
     "autoload": {
         "psr-4": {

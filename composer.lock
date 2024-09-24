@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94159c7dcae92a9d4e1869a56526b9f8",
+    "content-hash": "b5c2e7f0cdaf63a832cdef76ad304f0b",
     "packages": [
         {
             "name": "abdukhaligov/laravel-otp",
@@ -2257,6 +2257,61 @@
             "time": "2024-09-05T15:25:50+00:00"
         },
         {
+            "name": "phobiavr/phober-laravel-common",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phobiavr/phober-laravel-common.git",
+                "reference": "76ea105ad93d1566355ca3a4fd860fb0b60cf2b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phobiavr/phober-laravel-common/zipball/76ea105ad93d1566355ca3a4fd860fb0b60cf2b3",
+                "reference": "76ea105ad93d1566355ca3a4fd860fb0b60cf2b3",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^9.0|^11.0",
+                "php": "^8.2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Phobiavr\\PhoberLaravelCommon\\SharedServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phobiavr\\PhoberLaravelCommon\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phobiavr\\PhoberLaravelCommon\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdukhaligov Hikmat",
+                    "email": "hikmat.pou@gmail.com",
+                    "homepage": "https://github.com/Abdukhaligov",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Shared package for Phober microservices",
+            "support": {
+                "source": "https://github.com/phobiavr/phober-laravel-common/tree/master",
+                "issues": "https://github.com/phobiavr/phober-laravel-common/issues"
+            },
+            "time": "2024-09-24T01:05:08+00:00"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.9.3",
             "source": {
@@ -2967,40 +3022,6 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
-        },
-        {
-            "name": "shared/package",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./shared",
-                "reference": "1652e576e6f5f8b1e3e23ff33204028b027b1d7b"
-            },
-            "require": {
-                "laravel/framework": "*",
-                "php": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Shared\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Abdukhaligov Hikmat",
-                    "email": "hikmat.pou@gmail.com",
-                    "homepage": "https://github.com/Abdukhaligov",
-                    "role": "Developer"
-                }
-            ],
-            "description": "The package for shared classes and functions between the microservices",
-            "transport-options": {
-                "relative": true
-            }
         },
         {
             "name": "symfony/clock",
@@ -5503,7 +5524,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "abdukhaligov/laravel-otp": 20,
-        "shared/package": 20
+        "phobiavr/phober-laravel-common": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
