@@ -26,7 +26,7 @@ class OtpController extends BaseController {
 
         try {
             NotificationClient::sendMessage(NotificationProvider::TELEGRAM, NotificationChannel::OTP, $message);
-        } catch (ConnectionException $e) {
+        } catch (\Exception|ConnectionException $e) {
             Log::error('Failed to send OTP notification', ['message' => $e->getMessage()]);
 
             return response()->json(['message' => 'OTP created successfully, but failed to send'], Response::HTTP_ACCEPTED);
