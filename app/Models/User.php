@@ -2,6 +2,14 @@
 
 namespace App\Models;
 
+/**
+ * @property int $id
+ * @property string $username
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $telegram
+ * @property string $email
+ */
 class User extends \Illuminate\Foundation\Auth\User {
     protected $connection = 'db_auth';
 
