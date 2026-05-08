@@ -2,33 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthenticateRequest;
-use App\Models\User;
+use App\Http\Requests\Auth\AuthenticateRequest;
+use App\Http\Resources\UserResource;
+use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Hash;
-use Phobiavr\PhoberLaravelCommon\Helper;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseFoundation;
 
 class AuthController extends BaseController {
-    public function authenticate(AuthenticateRequest $request): JsonResponse {
-        $user = User::query()->where('email', $request->input('email'))->first();
-
-        if (Hash::check($request->input('password'), $user->password)) {
-            $token = base64_encode(Helper::quickRandom(40));
-
-            $user->api_token = $token;
-            $user->save();
-
-            return response()->json(['token' => "$token"]);
-        } else {
-            return response()->json(['message' => 'Credentials error'], 401);
-        }
+    public function __construct(private readonly AuthService $service) {
     }
 
-    public function valid(Request $request): JsonResponse {
-        $user = auth()->user();
+    public function authenticate(AuthenticateRequest $request): JsonResponse {
+        $token = $this->service->authenticate($request->email(), $request->password());
 
-        return response()->json(['user' => $user->toArray()]);
+        if (!$token) {
+            return Response::json(['message' => 'Credentials error'], ResponseFoundation::HTTP_UNAUTHORIZED);
+        }
+
+        return Response::json(['token' => $token]);
+    }
+
+    public function valid(): JsonResponse {
+        return Response::json(['user' => UserResource::make(auth()->user())]);
     }
 }

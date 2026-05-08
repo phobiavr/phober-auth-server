@@ -2,73 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Abdukhaligov\LaravelOTP\OtpFacade as Otp;
-use Illuminate\Http\Client\ConnectionException;
+use App\Http\Requests\Otp\CheckSubmittedRequest;
+use App\Http\Requests\Otp\GenerateRequest;
+use App\Http\Requests\Otp\ValidateRequest;
+use App\Services\OtpService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Log;
-use Phobiavr\PhoberLaravelCommon\Clients\NotificationClient;
-use Phobiavr\PhoberLaravelCommon\Enums\NotificationChannel;
-use Phobiavr\PhoberLaravelCommon\Enums\NotificationProvider;
-use Phobiavr\PhoberLaravelCommon\Helper;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseFoundation;
 
 class OtpController extends BaseController {
-    public function generateOtp(Request $request): JsonResponse {
-        $identifier = Helper::quickRandom(15);
-        $digits = $request->get('digits');
-        $validity = $request->get('validity');
-
-        $code = Otp::generate($identifier, $digits, $validity, onlyDigits: true);
-
-        $message = 'OTP: ' . $code;
-
-        try {
-            NotificationClient::sendMessage(NotificationProvider::TELEGRAM, NotificationChannel::OTP, $message);
-        } catch (\Exception|ConnectionException $e) {
-            Log::error('Failed to send OTP notification', ['message' => $e->getMessage()]);
-
-            return response()->json(['message' => 'OTP created successfully, but failed to send'], Response::HTTP_ACCEPTED);
-        }
-
-        return response()->json(['identifier' => $identifier, 'message' => 'OTP created successfully']);
+    public function __construct(private readonly OtpService $service) {
     }
 
-    public function validateOtp(Request $request): JsonResponse {
-        $identifier = $request->get('identifier');
-        $code = strtoupper($request->get('code'));
+    public function generateOtp(GenerateRequest $request): JsonResponse {
+        $result = $this->service->generate($request->digits(), $request->validity());
 
-        $valid = Otp::validate($identifier, $code);
-
-        if (!$valid) {
-            return response()->json(['message' => 'OTP is invalid'], 400);
+        if (!$result['notified']) {
+            return Response::json([
+                'identifier' => $result['identifier'],
+                'message'    => 'OTP created successfully, but failed to send',
+            ], ResponseFoundation::HTTP_ACCEPTED);
         }
 
-        return response()->json(['message' => 'OTP validated successfully']);
+        return Response::json([
+            'identifier' => $result['identifier'],
+            'message'    => 'OTP created successfully',
+        ]);
     }
 
-    public function submitOtp(Request $request): JsonResponse {
-        $identifier = $request->get('identifier');
-        $code = strtoupper($request->get('code'));
-
-        $valid = Otp::submit($identifier, $code);
-
-        if (!$valid) {
-            return response()->json(['message' => 'OTP is invalid'], 400);
+    public function validateOtp(ValidateRequest $request): JsonResponse {
+        if (!$this->service->validateCode($request->identifier(), $request->code())) {
+            return Response::json(['message' => 'OTP is invalid'], ResponseFoundation::HTTP_BAD_REQUEST);
         }
 
-        return response()->json(['message' => 'OTP submitted successfully']);
+        return Response::json(['message' => 'OTP validated successfully']);
     }
 
-    public function checkSubmitted(Request $request): JsonResponse {
-        $identifier = $request->get('identifier');
-        $valid = Otp::checkSubmitted($identifier);
-
-        if (!$valid) {
-            return response()->json(['message' => 'OTP is not submitted'], 400);
+    public function submitOtp(ValidateRequest $request): JsonResponse {
+        if (!$this->service->submitCode($request->identifier(), $request->code())) {
+            return Response::json(['message' => 'OTP is invalid'], ResponseFoundation::HTTP_BAD_REQUEST);
         }
 
-        return response()->json(['message' => 'OTP validated successfully']);
+        return Response::json(['message' => 'OTP submitted successfully']);
+    }
+
+    public function checkSubmitted(CheckSubmittedRequest $request): JsonResponse {
+        if (!$this->service->isSubmitted($request->identifier())) {
+            return Response::json(['message' => 'OTP is not submitted'], ResponseFoundation::HTTP_BAD_REQUEST);
+        }
+
+        return Response::json(['message' => 'OTP validated successfully']);
     }
 }
