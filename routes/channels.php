@@ -6,6 +6,10 @@ Broadcast::channel('instances', function ($user) {
     return $user !== null;
 });
 
+Broadcast::channel('sessions', function ($user) {
+    return $user !== null;
+});
+
 Broadcast::channel('user.{userId}.notification', function ($user, $userId) {
     return (int) $user->id === (int) $userId;
 });
