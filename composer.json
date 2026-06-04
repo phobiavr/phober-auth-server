@@ -22,6 +22,7 @@
         "laravel/telescope": "^5.2",
         "phobiavr/phober-laravel-common": "^0.1.0",
         "predis/predis": "^3.4",
+        "sentry/sentry-laravel": "^4.25",
         "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "autoload": {
