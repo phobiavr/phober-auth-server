@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Otp;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Phobiavr\PhoberLaravelCommon\Data\GenerateOtpPayload;
 
 class GenerateRequest extends FormRequest {
     public function rules(): array {
@@ -12,11 +13,7 @@ class GenerateRequest extends FormRequest {
         ];
     }
 
-    public function digits(): int {
-        return (int) $this->input('digits');
-    }
-
-    public function validity(): int {
-        return (int) $this->input('validity');
+    public function payload(): GenerateOtpPayload {
+        return GenerateOtpPayload::fromArray($this->validated());
     }
 }

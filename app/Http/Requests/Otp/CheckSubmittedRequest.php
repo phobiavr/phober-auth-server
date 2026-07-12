@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Otp;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Phobiavr\PhoberLaravelCommon\Data\CheckSubmittedPayload;
 
 class CheckSubmittedRequest extends FormRequest {
     public function rules(): array {
@@ -11,7 +12,7 @@ class CheckSubmittedRequest extends FormRequest {
         ];
     }
 
-    public function identifier(): string {
-        return $this->input('identifier');
+    public function payload(): CheckSubmittedPayload {
+        return CheckSubmittedPayload::fromArray($this->validated());
     }
 }

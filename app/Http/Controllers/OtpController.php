@@ -16,7 +16,8 @@ class OtpController extends BaseController {
     }
 
     public function generateOtp(GenerateRequest $request): JsonResponse {
-        $result = $this->service->generate($request->digits(), $request->validity());
+        $payload = $request->payload();
+        $result = $this->service->generate($payload->digits, $payload->validity);
 
         if (!$result['notified']) {
             return Response::json([
@@ -32,7 +33,8 @@ class OtpController extends BaseController {
     }
 
     public function validateOtp(ValidateRequest $request): JsonResponse {
-        if (!$this->service->validateCode($request->identifier(), $request->code())) {
+        $payload = $request->payload();
+        if (!$this->service->validateCode($payload->identifier, $payload->code)) {
             return Response::json(['message' => 'OTP is invalid'], ResponseFoundation::HTTP_BAD_REQUEST);
         }
 
@@ -40,7 +42,8 @@ class OtpController extends BaseController {
     }
 
     public function submitOtp(ValidateRequest $request): JsonResponse {
-        if (!$this->service->submitCode($request->identifier(), $request->code())) {
+        $payload = $request->payload();
+        if (!$this->service->submitCode($payload->identifier, $payload->code)) {
             return Response::json(['message' => 'OTP is invalid'], ResponseFoundation::HTTP_BAD_REQUEST);
         }
 
@@ -48,7 +51,8 @@ class OtpController extends BaseController {
     }
 
     public function checkSubmitted(CheckSubmittedRequest $request): JsonResponse {
-        if (!$this->service->isSubmitted($request->identifier())) {
+        $payload = $request->payload();
+        if (!$this->service->isSubmitted($payload->identifier)) {
             return Response::json(['message' => 'OTP is not submitted'], ResponseFoundation::HTTP_BAD_REQUEST);
         }
 

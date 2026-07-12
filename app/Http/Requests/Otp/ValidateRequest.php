@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Otp;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Phobiavr\PhoberLaravelCommon\Data\ValidateOtpPayload;
 
 class ValidateRequest extends FormRequest {
     public function rules(): array {
@@ -18,11 +19,7 @@ class ValidateRequest extends FormRequest {
         }
     }
 
-    public function identifier(): string {
-        return $this->input('identifier');
-    }
-
-    public function code(): string {
-        return $this->input('code');
+    public function payload(): ValidateOtpPayload {
+        return ValidateOtpPayload::fromArray($this->validated());
     }
 }
