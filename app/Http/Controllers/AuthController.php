@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\AuthenticateRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
@@ -26,5 +27,15 @@ class AuthController extends BaseController {
 
     public function valid(): JsonResponse {
         return Response::json(['user' => UserResource::make(auth()->user())]);
+    }
+
+    public function show(int $id): JsonResponse {
+        $user = User::find($id);
+
+        if (!$user) {
+            return Response::json(['message' => 'Not Found'], ResponseFoundation::HTTP_NOT_FOUND);
+        }
+
+        return Response::json(['user' => UserResource::make($user)]);
     }
 }
