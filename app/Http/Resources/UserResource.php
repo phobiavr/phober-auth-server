@@ -5,8 +5,11 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Phobiavr\PhoberLaravelCommon\Contracts\AuthUserInterface;
+use Phobiavr\PhoberLaravelCommon\Traits\AuthUserArrayable;
 
 class UserResource extends JsonResource implements AuthUserInterface {
+    use AuthUserArrayable;
+
     public function getId(): int {
         return $this->id;
     }
@@ -28,12 +31,6 @@ class UserResource extends JsonResource implements AuthUserInterface {
     }
 
     public function toArray(Request $request): array {
-        return [
-            self::FIELD_ID         => $this->getId(),
-            self::FIELD_USERNAME   => $this->getUsername(),
-            self::FIELD_FIRST_NAME => $this->getFirstName(),
-            self::FIELD_LAST_NAME  => $this->getLastName(),
-            self::FIELD_EMAIL      => $this->getEmail(),
-        ];
+        return $this->toAuthUserArray();
     }
 }
