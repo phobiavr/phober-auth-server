@@ -13,7 +13,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('private')->group(function () {
-    Route::post('/link/telegram', [TelegramController::class, 'linkTelegram']);
+    Route::post('/link/telegram', [TelegramController::class, 'linkTelegram'])->middleware('throttle:telegram-link');
     Route::get('/users/{id}', [AuthController::class, 'show']);
 });
 
