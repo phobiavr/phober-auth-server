@@ -5,17 +5,19 @@ namespace App\Services;
 use Abdukhaligov\LaravelOTP\OtpFacade as Otp;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Phobiavr\PhoberLaravelCommon\Clients\NotificationClient;
 use Phobiavr\PhoberLaravelCommon\Enums\NotificationChannel;
 use Phobiavr\PhoberLaravelCommon\Enums\NotificationProvider;
-use Phobiavr\PhoberLaravelCommon\Helper;
 
 class OtpService {
     /**
      * @return array{identifier: string, notified: bool}
      */
     public function generate(int $digits, int $validity): array {
-        $identifier = Helper::quickRandom(15);
+        // Str::random() is CSPRNG-backed (random_bytes); avoid mt_rand-based
+        // generators (e.g. str_shuffle) here, their state can be recovered from output.
+        $identifier = Str::random(15);
         $code       = Otp::generate($identifier, $digits, $validity, onlyDigits: true);
         $notified   = true;
 

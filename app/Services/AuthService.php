@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Phobiavr\PhoberLaravelCommon\Helper;
+use Illuminate\Support\Str;
 
 class AuthService {
     public function authenticate(string $email, string $password): ?string {
@@ -14,7 +14,9 @@ class AuthService {
             return null;
         }
 
-        $token = base64_encode(Helper::quickRandom(40));
+        // Str::random() is CSPRNG-backed (random_bytes); avoid mt_rand-based
+        // generators (e.g. str_shuffle) here, their state can be recovered from output.
+        $token = base64_encode(Str::random(40));
 
         $user->api_token = $token;
         $user->save();
