@@ -11,8 +11,6 @@ namespace App\Models;
  * @property string $email
  */
 class User extends \Illuminate\Foundation\Auth\User {
-    protected $connection = 'db_auth';
-
     public function toArray(): array {
         return [
             "id"         => $this->id,
