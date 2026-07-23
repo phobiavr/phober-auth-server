@@ -30,6 +30,14 @@ class UserResource extends JsonResource implements AuthUserInterface {
         return $this->email;
     }
 
+    public function getPermissions(): array {
+        return $this->resource->permissionNames();
+    }
+
+    public function hasPermission(string $permission): bool {
+        return in_array($permission, $this->getPermissions(), true);
+    }
+
     public function toArray(Request $request): array {
         return $this->toAuthUserArray();
     }
