@@ -10,6 +10,10 @@
         "laravel/framework": "^11.9",
         "laravel/reverb": "^1.10",
         "laravel/telescope": "^5.2",
+        "open-telemetry/api": "^1.9",
+        "open-telemetry/exporter-zipkin": "^1.2",
+        "open-telemetry/sdk": "^1.14",
+        "php-http/guzzle7-adapter": "^1.1",
         "predis/predis": "^3.4",
         "sentry/sentry-laravel": "^4.25",
         "simplesoftwareio/simple-qrcode": "^4.2"
